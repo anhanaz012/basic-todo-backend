@@ -32,8 +32,16 @@ app.get("/get-todo/:id", (req, res) => {
 
 // Update a todo based on ID
 app.put("/update-todo/:id", (req, res) => {
-  const prevTodo = todos.find((todo) => todo.id == req.params.id);
-  return res.send(prevTodo);
+  let prevTodo = todos.find((todo) => todo.id == req.params.id);
+  prevTodo.title = req.body.title;
+  prevTodo.description = req.body.description;
+  return res.send("Todo Updated Successfully");
+});
+
+//Delete a todo
+app.delete("/delete-todo/:id", (req, res) => {
+  todos = todos.filter((todo) => todo.id != req.params.id);
+  return res.send("Deleted todo");
 });
 
 app.listen(port, () => {
